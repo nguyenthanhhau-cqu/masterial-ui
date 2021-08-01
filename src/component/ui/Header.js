@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useState, useEffect } from "react";
 import AppBar from "@material-ui/core/AppBar";
 import ToolBar from "@material-ui/core/Toolbar";
 import useScrollTrigger from "@material-ui/core/useScrollTrigger";
@@ -8,6 +8,8 @@ import Tab from "@material-ui/core/Tab";
 import logo from "../../assets/logo.svg";
 import Button from "@material-ui/core/Button";
 import { Link } from "react-router-dom";
+import Menu from "@material-ui/core/Menu";
+import MenuItem from "@material-ui/core/MenuItem";
 
 function ElevationScroll(props) {
   const { children, window } = props;
@@ -31,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: "3em",
   },
   logo: {
-    height: "7em",
+    height: "8em",
   },
   tabContainer: {
     marginLeft: "auto",
@@ -48,13 +50,90 @@ const useStyles = makeStyles((theme) => ({
     marginRight: "25px",
     height: "45px",
   },
+  logoButton: {
+    padding: 0,
+    "&:hover": {
+      backgroundColor: "transparent",
+    },
+  },
+  menu: {
+    backgroundColor: theme.palette.common.blue,
+    color: "white",
+    borderRadius: "0",
+  },
+  menuItem: {
+    ...theme.typography.tab,
+    opacity: "0.7",
+    "&:hover": {
+      opacity: "1",
+    },
+  },
 }));
 
 const Header = () => {
-  const classes = useStyles();
-
   const [value, setValue] = useState(0);
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [open, setOpen] = useState(false); //set visible
+  const [selected, setSelected] = useState(0);
 
+  const options = [
+    { name: "Services", link: "/services" },
+    { name: "Custom Software Development", link: "/custom-software" },
+    { name: "Mobile App Development", link: "/mobile-apps" },
+    { name: "Website Development", link: "/websites" },
+  ];
+
+  const handleClick = (e) => {
+    setAnchorEl(e.currentTarget);
+    setOpen(true);
+  };
+
+  const handleClose = (e) => {
+    setAnchorEl(null);
+    setOpen(false);
+  };
+  const handleItemClick = (e, i) => {
+    setAnchorEl(null);
+    setOpen(false);
+    setSelected(i);
+  };
+
+  useEffect(() => {
+    switch (window.location.pathname) {
+      case "/":
+        setValue(0);
+        break;
+      case "/services":
+        setValue(1);
+        setSelected(0);
+        break;
+      case "/custom-software":
+        setValue(1);
+        setSelected(1);
+        break;
+      case "/mobile-apps":
+        setValue(1);
+        setSelected(2);
+        break;
+      case "/websites":
+        setValue(1);
+        setSelected(3);
+        break;
+      case "/revolution":
+        setValue(2);
+        break;
+      case "/about":
+        setValue(3);
+        break;
+      case "contact":
+        setValue(4);
+        break;
+      default:
+        break;
+    }
+  }, [value]);
+
+  const classes = useStyles();
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
@@ -64,7 +143,21 @@ const Header = () => {
       <ElevationScroll>
         <AppBar>
           <ToolBar disableGutters>
-            <img alt="Company logo" src={logo} className={classes.logo} />
+            <Button
+              className={classes.logoButton}
+              component={Link}
+              to="/"
+              onClick={() => setValue(0)}
+              disableRipple
+            >
+              <img
+                alt="Company logo"
+                src={logo}
+                className={classes.logo}
+                component={Link}
+                to="/"
+              />
+            </Button>
             <Tabs
               value={value}
               className={classes.tabContainer}
@@ -77,8 +170,11 @@ const Header = () => {
                 to="/"
               />
               <Tab
+                aria-owns={anchorEl ? "simple-menu" : undefined}
+                aria-haspopup={anchorEl ? "true" : undefined}
                 className={classes.tab}
                 label="Services"
+                onMouseOver={(e) => handleClick(e)}
                 component={Link}
                 to="/services"
               />
@@ -100,14 +196,42 @@ const Header = () => {
                 component={Link}
                 to="/contact"
               />
-              <Button
-                variant="contained"
-                className={classes.button}
-                color="secondary"
-              >
-                Free estimate
-              </Button>
             </Tabs>
+            <Button
+              variant="contained"
+              className={classes.button}
+              color="secondary"
+              component={Link}
+              to="/"
+            >
+              Free estimate
+            </Button>
+            <Menu
+              id="simple-menu"
+              anchorEl={anchorEl}
+              open={open}
+              onClose={handleClose}
+              MenuListProps={{ onMouseLeave: handleClose }}
+              classes={{ paper: classes.menu }}
+              elevation={0}
+            >
+              {options.map((option, index) => (
+                <MenuItem
+                  key={option}
+                  onClick={(e) => {
+                    handleClose();
+                    setValue(1);
+                    handleItemClick(e, index);
+                  }}
+                  classes={{ root: classes.menuItem }}
+                  component={Link}
+                  to={option.link}
+                  selected={index === selected && value === 1}
+                >
+                  {option.name}
+                </MenuItem>
+              ))}
+            </Menu>
           </ToolBar>
         </AppBar>
       </ElevationScroll>

@@ -117,10 +117,12 @@ const useStyles = makeStyles((theme) => ({
   appBar: {
     zIndex: theme.zIndex.modal + 1,
   },
+  menuItemSelected: {
+    opacity: "1",
+  },
 }));
 
-const Header = () => {
-  const [value, setValue] = useState(0);
+const Header = ({ value, setValue, selected, setSelected }) => {
   const theme = useTheme();
   const iOS = process.browser && /iPad|iPhone|iPod/.test(navigator.userAgent);
 
@@ -130,8 +132,8 @@ const Header = () => {
 
   const [anchorEl, setAnchorEl] = useState(null);
   const [open, setOpen] = useState(false); //set visible
-  const [selected, setSelected] = useState(0);
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const options = [
     { name: "Services", link: "/services", activeIndex: 1, selectedIndex: 1 },
     {
@@ -153,6 +155,7 @@ const Header = () => {
       selectedIndex: 4,
     },
   ];
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const routes = [
     { name: "Home", link: "/", activeIndex: 0 },
     {
@@ -182,6 +185,7 @@ const Header = () => {
     setOpen(false);
     setSelected(i);
   };
+  // eslint-disable-next-line
 
   useEffect(() => {
     [...routes, ...options].forEach((route) => {
@@ -198,7 +202,7 @@ const Header = () => {
           break;
       }
     });
-  }, [value, selected]);
+  }, [value, selected, options, routes, setValue, setSelected]);
 
   const classes = useStyles();
   const handleChange = (event, newValue) => {
@@ -253,7 +257,10 @@ const Header = () => {
               setValue(1);
               handleItemClick(e, index);
             }}
-            classes={{ root: classes.menuItem }}
+            classes={{
+              root: classes.menuItem,
+              selected: classes.menuItemSelected,
+            }}
             component={Link}
             to={option.link}
             selected={index === selected && value === 1}

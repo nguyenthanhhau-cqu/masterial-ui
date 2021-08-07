@@ -1,0 +1,10 @@
+{
+    "configurations": [
+        {
+            "type": "pwa-chrome",
+            "name": "http://192.168.223.1:3000/",
+            "request": "launch",
+            "url": "http://192.168.223.1:3000/"
+        }
+    ]
+}

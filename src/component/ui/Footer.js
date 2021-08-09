@@ -230,17 +230,35 @@ const Footer = ({ value, setValue, selected, setSelected }) => {
         className={classes.iconContainer}
         spacing={2}
       >
-        <Grid item>
+        <Grid
+          item
+          component={"a"}
+          href="http://facebook.com/andrewhau304"
+          rel="noopener noreferrer"
+          target="_blank"
+        >
           <img className={classes.iconImg} src={facebook} alt="facebook icon" />
         </Grid>
-        <Grid item>
-          <img className={classes.iconImg} src={twitter} alt="facebook icon" />
+        <Grid
+          item
+          component={"a"}
+          href="http://facebook.com/andrewhau304"
+          rel="noopener noreferrer"
+          target="_blank"
+        >
+          <img className={classes.iconImg} src={twitter} alt="twitter icon" />
         </Grid>
-        <Grid item>
+        <Grid
+          item
+          component={"a"}
+          href="https://www.instagram.com/hau3042000/"
+          rel="noopener noreferrer"
+          target="_blank"
+        >
           <img
             className={classes.iconImg}
             src={instagram}
-            alt="facebook icon"
+            alt="instagram icon"
           />
         </Grid>
       </Grid>

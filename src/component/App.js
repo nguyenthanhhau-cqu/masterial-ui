@@ -3,6 +3,7 @@ import Header from "./ui/Header";
 import theme from "./ui/Theme";
 import Footer from "./ui/Footer";
 import { useState } from "react";
+import LandingPage from "./ui/LandingPage";
 
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 function App() {
@@ -18,13 +19,7 @@ function App() {
           setSelected={setSelected}
         />
         <Switch>
-          <Route
-            exact
-            path="/"
-            component={() => (
-              <div style={{ height: "2000px" }}> This is a home function</div>
-            )}
-          />
+          <Route exact path="/" component={LandingPage} />
           <Route
             exact
             path="/services"

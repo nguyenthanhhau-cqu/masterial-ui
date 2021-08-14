@@ -138,24 +138,24 @@ const Header = ({ value, setValue, selected, setSelected }) => {
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const options = [
-    { name: "Services", link: "/services", activeIndex: 1, selectedIndex: 1 },
+    { name: "Services", link: "/services", activeIndex: 1, selectedIndex: 0 },
     {
       name: "Custom Software Development",
       link: "/custom-software",
       activeIndex: 1,
-      selectedIndex: 2,
+      selectedIndex: 1,
     },
     {
       name: "Mobile App Development",
       link: "/mobile-apps",
       activeIndex: 1,
-      selectedIndex: 3,
+      selectedIndex: 2,
     },
     {
       name: "Website Development",
       link: "/websites",
       activeIndex: 1,
-      selectedIndex: 4,
+      selectedIndex: 3,
     },
   ];
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -201,6 +201,9 @@ const Header = ({ value, setValue, selected, setSelected }) => {
             }
           }
           break;
+        case "/estimate":
+          setValue(5);
+          break;
         default:
           break;
       }
@@ -238,6 +241,7 @@ const Header = ({ value, setValue, selected, setSelected }) => {
         color="secondary"
         component={Link}
         to="/estimate"
+        onClick={() => setValue(5)}
       >
         Free estimate
       </Button>

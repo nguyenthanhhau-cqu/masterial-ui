@@ -19,7 +19,13 @@ function App() {
           setSelected={setSelected}
         />
         <Switch>
-          <Route exact path="/" component={LandingPage} />
+          <Route
+            exact
+            path="/"
+            render={() => (
+              <LandingPage setValue={setValue} setSelected={setSelected} />
+            )}
+          />
           <Route
             exact
             path="/services"
@@ -61,12 +67,7 @@ function App() {
             component={() => <div> This is a estimate function</div>}
           />
         </Switch>
-        <Footer
-          value={value}
-          setValue={setValue}
-          selected={selected}
-          setSelected={setSelected}
-        />
+        <Footer setValue={setValue} setSelected={setSelected} />
       </ThemeProvider>
     </BrowserRouter>
   );

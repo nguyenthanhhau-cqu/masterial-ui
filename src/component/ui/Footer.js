@@ -40,16 +40,16 @@ const useStyles = makeStyles((theme) => ({
     margin: "3em",
   },
   iconImg: {
-    height: "4em",
-    width: "4em",
+    height: "2em",
+    width: "2em",
     [theme.breakpoints.down("xs")]: {
-      height: "2em",
-      width: "2em",
+      height: "1em",
+      width: "1em",
     },
   },
   iconContainer: {
     position: "absolute",
-    marginTop: "-6em",
+    marginTop: "-4em",
     right: "2em",
     [theme.breakpoints.down("xs")]: {
       right: "1em",
@@ -57,7 +57,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Footer = ({ value, setValue, selected, setSelected }) => {
+const Footer = ({ setValue, setSelected }) => {
   const classes = useStyles();
 
   return (

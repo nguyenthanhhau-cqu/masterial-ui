@@ -14,6 +14,8 @@ import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import revolutionBackground from "../../assets/repeatingBackground.svg";
 import aboutUsBackground from "../../assets/infoBackground.svg";
+import CallToAction from "../ui/CallToAction";
+import { Link } from "react-router-dom";
 const useStyles = makeStyles((theme) => ({
   animation: {
     maxWidth: "50em",
@@ -26,6 +28,9 @@ const useStyles = makeStyles((theme) => ({
   },
   buttonContainer: {
     margin: "1em",
+    [theme.breakpoints.down("sm")]: {
+      margin: 0,
+    },
   },
   EstimateButton: {
     ...theme.typography.estimate,
@@ -33,7 +38,7 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: 50,
     height: 45,
     width: 145,
-    marginRight: 40,
+    marginRight: 10,
     "&:hover": {
       backgroundColor: theme.palette.secondary.light,
     },
@@ -122,7 +127,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const LandingPage = () => {
+const LandingPage = ({ setValue, setSelected }) => {
   const theme = useTheme();
   const classes = useStyles();
   const matchSM = useMediaQuery(theme.breakpoints.down("sm"));
@@ -160,12 +165,23 @@ const LandingPage = () => {
                   <Button
                     className={classes.EstimateButton}
                     variant="contained"
+                    component={Link}
+                    to="/estimate"
+                    onClick={() => setValue(5)}
                   >
                     Free Estimate
                   </Button>
                 </Grid>
                 <Grid item>
-                  <Button className={classes.LeanMoreButton} variant="outlined">
+                  <Button
+                    className={classes.LeanMoreButton}
+                    variant="outlined"
+                    component={Link}
+                    to="/revolution"
+                    onClick={() => {
+                      setValue(2);
+                    }}
+                  >
                     <span style={{ marginRight: 10 }}>Learn More</span>
                     <ButtonArrow
                       width={15}
@@ -193,7 +209,16 @@ const LandingPage = () => {
                 Complete digital solutions, from investigation to{" "}
                 <span className={classes.specialText}>celebrations</span>
               </Typography>
-              <Button className={classes.leanMoreBtn} variant="outlined">
+              <Button
+                className={classes.leanMoreBtn}
+                variant="outlined"
+                component={Link}
+                to="/custom-software"
+                onClick={() => {
+                  setValue(1);
+                  setSelected(1);
+                }}
+              >
                 <span style={{ marginRight: 10 }}>Learn More</span>
                 <ButtonArrow
                   width={15}
@@ -228,7 +253,16 @@ const LandingPage = () => {
                 {matchSM ? null : <br />}
                 app with either mobile platform
               </Typography>
-              <Button className={classes.leanMoreBtn} variant="outlined">
+              <Button
+                className={classes.leanMoreBtn}
+                variant="outlined"
+                component={Link}
+                to="/mobile-apps"
+                onClick={() => {
+                  setValue(1);
+                  setSelected(2);
+                }}
+              >
                 <span style={{ marginRight: 10 }}>Learn More</span>
                 <ButtonArrow
                   width={15}
@@ -257,7 +291,16 @@ const LandingPage = () => {
               <Typography variant="subtitle1">
                 Optimized for Search Engines, built for speed
               </Typography>
-              <Button className={classes.leanMoreBtn} variant="outlined">
+              <Button
+                className={classes.leanMoreBtn}
+                variant="outlined"
+                component={Link}
+                to="/websites"
+                onClick={() => {
+                  setValue(1);
+                  setSelected(3);
+                }}
+              >
                 <span style={{ marginRight: 10 }}>Learn More</span>
                 <ButtonArrow
                   width={15}
@@ -294,7 +337,15 @@ const LandingPage = () => {
                     Visionary insights coupled with cutting-edge technology is
                     recipe for a revolution
                   </Typography>
-                  <Button className={classes.leanMoreBtn} variant="outlined">
+                  <Button
+                    className={classes.leanMoreBtn}
+                    variant="outlined"
+                    component={Link}
+                    to="/revolution"
+                    onClick={() => {
+                      setValue(2);
+                    }}
+                  >
                     <span style={{ marginRight: 10 }}>Learn More</span>
                     <ButtonArrow
                       width={15}
@@ -339,6 +390,11 @@ const LandingPage = () => {
                       Let's get personal
                     </Typography>
                     <Button
+                      component={Link}
+                      to="/about"
+                      onClick={() => {
+                        setValue(3);
+                      }}
                       className={classes.leanMoreBtn}
                       variant="outlined"
                       style={{
@@ -370,6 +426,11 @@ const LandingPage = () => {
                       Say hello!
                     </Typography>
                     <Button
+                      onClick={() => {
+                        setValue(4);
+                      }}
+                      component={Link}
+                      to="/contact"
                       className={classes.leanMoreBtn}
                       variant="outlined"
                       style={{ color: "white", borderColor: "white" }}
@@ -382,6 +443,9 @@ const LandingPage = () => {
               </Grid>
             </Grid>
           </Grid>
+        </Grid>
+        <Grid item>
+          <CallToAction setValue={setValue} />
         </Grid>
       </Grid>
     </Fragment>
